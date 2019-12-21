@@ -32,13 +32,16 @@ const Student: React.FC<IStudent> = ({ id, name = "", birthdate = "", editable =
             </td>
             <td>
                 <select
-                    defaultValue={student.performance}
+                    defaultValue={""}
+                    value={student.performance}
                     disabled={!editable}
                     name="performance"
                     onChange={changeHandler}
                 >
                     {["", "неуд", "уд", "хор", "отл"].map((e, i) => (
-                        <option key={i}>{e}</option>
+                        <option value={e} key={i}>
+                            {e}
+                        </option>
                     ))}
                 </select>
             </td>
