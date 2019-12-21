@@ -12,4 +12,4 @@
 
 front-end - react(react hooks) + redux + typescript
 
-Demo: https://sclif13.github.io/ts-react-redux-example
+Demo: https://sclif13.github.io/ts-react-redux-example/
