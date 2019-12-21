@@ -1,13 +1,52 @@
+@import-normalize;
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    max-width: 1024px;
 }
+
+table td {
+    padding: 5px !important;
+}
+
+table tr.editable {
+    background-color: rgba(76, 175, 80, 0.3) !important;
+}
+
+table tr th {
+    text-align: center;
+}
+
+select {
+    display: inline-block;
+}
+
+input:disabled,
+select:disabled {
+    color: rgb(84, 84, 84) !important;
+}
+
+table td div.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+table td div.actions button {
+    margin: 0 5px;
+}
+
+.m20 {
+    margin-top: 20px;
+}
+

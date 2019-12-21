@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import { useSelector as useReduxSelector, shallowEqual, TypedUseSelectorHook, useDispatch } from "react-redux"
+import { AppState } from "./store"
+import { newStudent } from "./actions"
+import Student from "./components/Student"
+
+const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const students = useSelector(state => state.data, shallowEqual)
+    const dispatch = useDispatch()
+    return (
+        <div className="container">
+            <table className="striped">
+                <thead>
+                    <tr>
+                        <th>ФИО</th>
+                        <th>Дата рождения</th>
+                        <th>Успеваемость</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {students.map(s => (
+                        <Student {...s} key={s.id} />
+                    ))}
+                </tbody>
+            </table>
+            <button
+                className="btn-floating btn-large m20"
+                onClick={() => dispatch(newStudent(Date.now()))}
+                title="Добавить"
+            >
+                <i className="small material-icons">add</i>
+            </button>
+        </div>
+    )
 }
 
-export default App;
+export default App
