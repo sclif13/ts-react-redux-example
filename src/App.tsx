@@ -9,6 +9,7 @@ const useSelector: TypedUseSelectorHook<AppState> = useReduxSelector
 const App: React.FC = () => {
     const students = useSelector(state => state.data, shallowEqual)
     const dispatch = useDispatch()
+
     return (
         <div className="container">
             <table className="striped">
@@ -27,7 +28,7 @@ const App: React.FC = () => {
                 </tbody>
             </table>
             <button
-                className="btn-floating btn-large m20"
+                className="btn-floating btn-large m20 add"
                 onClick={() => dispatch(newStudent(Date.now()))}
                 title="Добавить"
             >
