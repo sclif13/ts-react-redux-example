@@ -2,8 +2,11 @@ import React, { useState, ChangeEvent } from "react"
 import { IStudent } from "../../types"
 import { useDispatch } from "react-redux"
 import { removeStudent, changeStudent } from "../../actions"
+import Flatpickr from "react-flatpickr"
+import "./material_green.css"
+import { Russian } from "flatpickr/dist/l10n/ru.js"
 
-const Student: React.FC<IStudent> = ({ id, name = "", birthdate = "", editable = false, performance = "" }) => {
+const Student: React.FC<IStudent> = ({ id, name = "", birthdate, editable = false, performance = "" }) => {
     const dispatch = useDispatch()
     const [student, setStudent] = useState({
         id,
@@ -22,12 +25,12 @@ const Student: React.FC<IStudent> = ({ id, name = "", birthdate = "", editable =
                 <input type="text" value={student.name} onChange={changeHandler} name="name" disabled={!editable} />
             </td>
             <td>
-                <input
-                    type="date"
+                <Flatpickr
                     value={student.birthdate}
-                    onChange={changeHandler}
-                    name="birthdate"
-                    disabled={!editable}
+                    options={{ locale: Russian }}
+                    onChange={date => {
+                        setStudent({ ...student, birthdate: date[0] })
+                    }}
                 />
             </td>
             <td>

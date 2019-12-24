@@ -1,7 +1,7 @@
 export interface IStudent {
     id: number
     name?: string
-    birthdate?: string
+    birthdate?: Date
     performance?: "" | "неуд" | "уд" | "хор" | "отл"
     editable?: boolean
 }
