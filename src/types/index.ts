@@ -2,15 +2,8 @@ export interface IStudent {
     id: number
     name?: string
     birthdate?: string
-    performance?: Performance
+    performance?: "" | "неуд" | "уд" | "хор" | "отл"
     editable?: boolean
-}
-
-export enum Performance {
-    "неуд",
-    "уд",
-    "хор",
-    "отл",
 }
 
 export const NEW_STUDENT = "NEW_STUDENT"
