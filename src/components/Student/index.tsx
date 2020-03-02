@@ -78,4 +78,4 @@ const Student: React.FC<IStudent> = ({ id, name = "", birthdate, editable = fals
     )
 }
 
-export default Student
+export default React.memo(Student)
