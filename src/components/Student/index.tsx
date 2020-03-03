@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react"
+import React, { useState, useCallback } from "react"
 import { IStudent } from "../../types"
 import { useDispatch } from "react-redux"
 import { removeStudent, changeStudent } from "../../actions"
@@ -15,9 +15,34 @@ const Student: React.FC<IStudent> = ({ id, name = "", birthdate, editable = fals
         editable,
         performance,
     })
-    const changeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setStudent({ ...student, [e.target.name]: e.target.value })
-    }
+
+    const changeHandler = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+            setStudent({ ...student, [e.target.name]: e.target.value })
+        },
+        [student],
+    )
+
+    const changeBirthdateHandler = useCallback(
+        date => {
+            setStudent({ ...student, birthdate: date[0] })
+        },
+        [student],
+    )
+
+    const saveHandler = useCallback(() => {
+        dispatch(changeStudent({ ...student, editable: false }))
+    }, [dispatch, student])
+
+    const editHandler = useCallback(() => {
+        dispatch(changeStudent({ ...student, editable: true }))
+    }, [dispatch, student])
+
+    const cancelHandler = useCallback(() => {
+        setStudent({ ...student, name, birthdate, editable: false, performance })
+    }, [student, name, birthdate, performance])
+
+    const removeHandler = useCallback(() => dispatch(removeStudent(id)), [dispatch, id])
 
     return (
         <tr className={editable ? "editable" : ""}>
@@ -28,9 +53,8 @@ const Student: React.FC<IStudent> = ({ id, name = "", birthdate, editable = fals
                 <Flatpickr
                     value={student.birthdate}
                     options={{ locale: Russian }}
-                    onChange={date => {
-                        setStudent({ ...student, birthdate: date[0] })
-                    }}
+                    onChange={changeBirthdateHandler}
+                    disabled={!editable}
                 />
             </td>
             <td>
@@ -45,31 +69,18 @@ const Student: React.FC<IStudent> = ({ id, name = "", birthdate, editable = fals
             <td>
                 <div className="actions">
                     {editable ? (
-                        <button
-                            className="btn"
-                            onClick={() => dispatch(changeStudent({ ...student, editable: false }))}
-                            title="Сохранить"
-                        >
+                        <button className="btn" onClick={saveHandler} title="Сохранить">
                             <i className="small material-icons">done</i>
                         </button>
                     ) : (
-                        <button
-                            className="btn"
-                            onClick={() => dispatch(changeStudent({ ...student, editable: true }))}
-                            title="Редактировать"
-                        >
+                        <button className="btn" onClick={editHandler} title="Редактировать">
                             <i className="small material-icons">edit</i>
                         </button>
                     )}
-                    <button
-                        disabled={!editable}
-                        className="btn"
-                        onClick={() => setStudent({ ...student, name, birthdate, editable: false, performance })}
-                        title="Отмена"
-                    >
+                    <button disabled={!editable} className="btn" onClick={cancelHandler} title="Отмена">
                         <i className="small material-icons">undo</i>
                     </button>
-                    <button className="btn" onClick={() => dispatch(removeStudent(id))} title="Удалить">
+                    <button className="btn" onClick={removeHandler} title="Удалить">
                         <i className="small material-icons">clear</i>
                     </button>
                 </div>
